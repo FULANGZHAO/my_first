@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t!*&0jh+8u2hjlm!aga+b3&&9-as#h0i#+-jhe$5fam*qpi@6n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -138,22 +138,8 @@ BOOTSTRAP3 = {
     'include_jquery': True,
 }
 
-# Heroku设置
-if os.getcwd() == '/app':
-    import dj_database_url
-    DATABASES = {
-        'defult': dj_database_url.config(default='postgres://localhost')
-    }
+#支持所有主机头
+ALLOWED_HOSTS = ['*']
 
-    #让request.is_secure()承认X-Forwarded-Proto头
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARD_PROTO', 'https')
-
-    #支持所有主机头 (host header)
-    ALLOWED_HOSTS = ['*']
-
-    #静态资产配置
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    STATIC_ROOT = 'staticfiles'
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
+#静态文件收集目录
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
